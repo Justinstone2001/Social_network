@@ -1,7 +1,7 @@
 const { user } = require("../models");
 
 module.exports = {
-    createuser(req, res) {
+    createUser(req, res) {
     if (req.body.userId) {
       user
         .create(req.body)
@@ -28,14 +28,14 @@ module.exports = {
     }
   },
 
-  getusers(req, res) {
+  getUsers(req, res) {
     user
       .find()
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
 
-  getSingleuserById(req, res) {
+  getSingleUserById(req, res) {
     user
       .findOne({ _id: req.params.userId })
       .populate({ path: "thoughts" })

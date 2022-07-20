@@ -1,7 +1,7 @@
 
 const { thought } = require('../models');
 module.exports = {
-    createthought(req, res) {
+    createThought(req, res) {
         if (req.body.thoughtId) {
             thought.create(req.body)
                 .then((_id ) => {
@@ -31,7 +31,7 @@ module.exports = {
             .then((thoughts) => res.json(thoughts))
             .catch((err) => res.status(500).json(err));
     },
-    getSinglethoughtById(req, res) {
+    getSingleThoughtById(req, res) {
         thought.findOne({ _id: req.params.thoughtId })
             .populate({ path: 'thoughts' })
             .populate({ path: 'friends' })
@@ -43,7 +43,7 @@ module.exports = {
             )
             .catch((err) => res.status(500).json(err));
     },
-    updatethought(req, res) {
+    updateThought(req, res) {
         thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
             { $set: req.body },
@@ -59,7 +59,7 @@ module.exports = {
                 res.status(500).json(err);
             });
     },
-    deletethought(req, res) {
+    deleteThought(req, res) {
         thought.findOneAndRemove({ _id: req.params.thoughtId })
             .then((thought) =>
                 !thought
