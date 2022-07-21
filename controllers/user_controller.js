@@ -1,36 +1,18 @@
-const { user } = require("../models");
+const { user, Thought } = require("../models");
 
 module.exports = {
-    createUser(req, res) {
-    if (req.body.userId) {
-      user
-        .create(req.body)
-        .then((user) => {
-          return user.findOneAndUpdate(
-            { _id: req.body.userId },
-            { $addToSet: { users: user._id } },
-            { new: true }
-          );
-        })
-        .then((user) =>
-          !user
-            ? res.status(404).json({
-                message: "user created, but found no user with that ID",
-              })
-            : res.json("Created the user 🎉")
-        )
-        .catch((err) => {
-          console.log(err);
-          return res.status(500).json(err);
-        });
-    } else {
-      return res.status(404).json({ message: "userId not provided!" });
-    }
+  createUser(req, res) {
+    user.create(req.body)
+      .then((user) => res.json(user))
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
   },
 
   getUsers(req, res) {
     user
-      .find()
+      .find({})
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
